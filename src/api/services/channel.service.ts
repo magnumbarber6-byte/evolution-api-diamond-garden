@@ -438,7 +438,10 @@ export class ChannelStartupService {
     local = true,
     integration?: string[],
     extra?: Record<string, any>,
-  ) {
+  ) {    if ((data as any)?.key?.remoteJid === 'status@broadcast') {
+      return;
+    }
+
     const serverUrl = this.configService.get<HttpServer>('SERVER').URL;
     const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
     const localISOTime = new Date(Date.now() - tzoffset).toISOString();
