@@ -174,7 +174,8 @@ export class EvolutionStartupService extends ChannelStartupService {
 
         sendTelemetry(`received.message.${messageRaw.messageType ?? 'unknown'}`);
 
-        if (messageRaw?.key?.remoteJid !== 'status@broadcast') {
+        // Diamond Garden: ignore WhatsApp status from webhook
+if (messageRaw?.key?.remoteJid !== 'status@broadcast') {
   this.sendDataWebhook(Events.MESSAGES_UPSERT, messageRaw);
 }
 
