@@ -174,7 +174,9 @@ export class EvolutionStartupService extends ChannelStartupService {
 
         sendTelemetry(`received.message.${messageRaw.messageType ?? 'unknown'}`);
 
-        this.sendDataWebhook(Events.MESSAGES_UPSERT, messageRaw);
+        if (messageRaw?.key?.remoteJid !== 'status@broadcast') {
+  this.sendDataWebhook(Events.MESSAGES_UPSERT, messageRaw);
+}
 
         await chatbotController.emit({
           instance: { instanceName: this.instance.name, instanceId: this.instanceId },
